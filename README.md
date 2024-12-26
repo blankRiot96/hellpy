@@ -1,1 +1,3 @@
+# **NOTE**: PROJECT ON HIATUS UNTIL MY FINALS ARE OVER
+
 hell in python
