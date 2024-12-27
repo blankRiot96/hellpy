@@ -34,10 +34,17 @@ class Core:
         self.state_obj.draw()
         EndDrawing()
 
+    def cleanup(self):
+        if hasattr(shared, "server"):
+            shared.server.close()
+        shared.client.close()
+
     def run(self):
         while not WindowShouldClose():
             self.update()
             self.draw()
+
+        self.cleanup()
 
 
 def main():
