@@ -1,9 +1,13 @@
 from raylib import *
 
+from src import shared
+
 
 class LobbyState:
     def __init__(self):
-        pass
+        if shared.is_host:
+            self.create_server()
+        self.create_client()
 
     def create_server(self):
         pass
@@ -16,4 +20,5 @@ class LobbyState:
 
     def draw(self):
         DrawFPS(10, 10)
-        DrawText(f"LOBBY: {}", 10, 30, 32, RED)
+        DrawText(b"LOBBY", 10, 30, 32, RED)
+        DrawText(f"CLIENT: {shared.client_name}".encode(), 10, 60, 24, RED)

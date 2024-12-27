@@ -1,4 +1,4 @@
-import sys
+import random
 
 from raylib import *
 
@@ -13,10 +13,7 @@ class MenuState:
     def __init__(self):
         GuiSetStyle(DEFAULT, TEXT_SIZE, 32)
 
-        if len(sys.argv) > 1:
-            self.client_name = sys.argv[-1].encode()
-        else:
-            self.client_name = b""
+        self.client_name = f"guest{random.randint(1, 99)}".encode()
 
     def update(self):
         pass
@@ -45,6 +42,7 @@ class MenuState:
             ),
             b"FIND SERVER",
         ):
+            shared.client_name = self.client_name.decode()
             shared.current_state = State.SERVER_FINDER
 
         if GuiButton(
@@ -56,4 +54,6 @@ class MenuState:
             ),
             b"CREATE SERVER",
         ):
+            shared.client_name = self.client_name.decode()
+            shared.is_host = True
             shared.current_state = State.LOBBY
