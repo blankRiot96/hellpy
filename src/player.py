@@ -34,7 +34,8 @@ class Player:
         self.pos.x += SPEED * dx * GetFrameTime()
         self.pos.y += SPEED * dy * GetFrameTime()
 
-        shared.client.packet.pos = self.pos
+        shared.client.packet.pos.x = self.pos.x
+        shared.client.packet.pos.y = self.pos.y
 
     @staticmethod
     def draw_from_packet(packet: Packet) -> None:

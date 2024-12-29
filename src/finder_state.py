@@ -7,7 +7,7 @@ from src.enums import State
 class FinderState:
     def __init__(self):
         GuiSetStyle(DEFAULT, TEXT_SIZE, 32)
-        self.server_code = b"CsE4eq" if shared.debug_mode else b""
+        self.server_code = b""
 
     def update(self):
         pass
@@ -16,6 +16,4 @@ class FinderState:
         GuiTextBox((10, 10, 200, 70), self.server_code, 32, True)
 
         if GuiButton((10, 90, 200, 70), b"FIND"):
-            if shared.debug_mode:
-                shared.server_ip = "192.168.137.96"
             shared.current_state = State.LOBBY
