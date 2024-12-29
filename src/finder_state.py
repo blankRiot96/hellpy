@@ -17,5 +17,5 @@ class FinderState:
 
         if GuiButton((10, 90, 200, 70), b"FIND"):
             if shared.debug_mode:
-                shared.server_ip = "172.19.135.170"
+                shared.server_ip = "192.168.137.96"
             shared.current_state = State.LOBBY
