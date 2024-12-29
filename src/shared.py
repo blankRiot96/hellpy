@@ -15,7 +15,7 @@ MSG_SIZE_SIZE = 4
 
 current_state: State
 is_host = False
-debug_mode: bool
+debug_mode: bool = False
 client_name: str
 server_ip: str
 
