@@ -13,7 +13,7 @@ class Color:
     b: int = 0
 
 
-SPEED = 100
+SPEED = 300
 
 
 class Player:
@@ -40,7 +40,7 @@ class Player:
     def draw_from_packet(packet: Packet) -> None:
         px, py = int(packet.pos.x), int(packet.pos.y)
         DrawRectangle(px, py, 50, 50, packet.color)
-        DrawText(packet.name.encode(), px, py, 20, GREEN)
+        DrawText(packet.name.encode(), px, py - 20, 20, GREEN)
 
     def draw(self):
         self.draw_from_packet(shared.client.packet)

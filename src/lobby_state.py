@@ -25,5 +25,5 @@ class LobbyState:
         DrawText(f"CLIENT: {shared.client_name}".encode(), 10, 60, 24, RED)
         self.player.draw()
 
-        for packet in shared.client.other_client_packets:
+        for packet in shared.client.other_client_packets.values():
             self.player.draw_from_packet(packet)

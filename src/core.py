@@ -9,6 +9,7 @@ from src.states import StateObj
 
 class Core:
     def __init__(self):
+        SetTraceLogLevel(LOG_ERROR)
         self.process_cli()
 
         InitWindow(shared.MENU_WIDTH, shared.MENU_HEIGHT, b"Hell")
@@ -37,7 +38,8 @@ class Core:
     def cleanup(self):
         if hasattr(shared, "server"):
             shared.server.close()
-        shared.client.close()
+        if hasattr(shared, "client"):
+            shared.client.close()
 
     def run(self):
         while not WindowShouldClose():

@@ -4,6 +4,8 @@ from dataclasses import dataclass
 
 from raylib import *
 
+from src.logger import log
+
 
 @dataclass
 class Vector2:
@@ -15,6 +17,7 @@ class Vector2:
 class Packet:
     pos: Vector2
     name: str
+    color: tuple
 
     def to_json(self) -> str:
         d = {"pos": [self.pos.x, self.pos.y], "name": self.name, "color": self.color}
@@ -25,8 +28,9 @@ class Packet:
     def from_json(cls, json_data: str) -> t.Self:
         try:
             d = json.loads(json_data)
-        except:
-            print(json_data)
+        except Exception as e:
+            log(json_data, color="cyan")
+            raise e
 
         pos = Vector2()
         pos.x, pos.y = d["pos"]

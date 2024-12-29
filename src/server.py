@@ -1,5 +1,6 @@
 import socket
 import threading
+import time
 
 from src import shared
 from src.logger import log
@@ -14,44 +15,59 @@ class Server:
     """
 
     def __init__(self):
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.socket.bind((HOST, PORT))
         shared.server_ip = HOST
 
     def process_server(self):
         self.socket.listen()
-        log(f"Server started at {HOST}:{PORT}")
+        log(f"Server started at {HOST}:{PORT}", color="red")
 
-        clients = []
+        clients: list[socket.socket] = []
+
+        def recv_all(sock, length):
+            data = b""
+            while len(data) < length:
+                more = sock.recv(length - len(data))
+                if not more:
+                    raise EOFError("Socket closed before receiving all data")
+                data += more
+            return data
 
         def handle_client(client_socket: socket.socket, client_address):
-            log({f"New connection from: {client_address}"})
+            log(f"New connection from: {client_address}", color="red")
 
             while True:
-                data = client_socket.recv(1024)
-                if not data:
+                time.sleep(0)
+                message_size = int.from_bytes(
+                    recv_all(client_socket, shared.MSG_SIZE_SIZE)
+                )
+                message = recv_all(client_socket, message_size)
+                size = len(message)
+                if not message:
                     break
 
                 for client in clients:
                     if client == client_socket:
                         continue
 
-                    client.sendall(data)
+                    client.send(size.to_bytes(shared.MSG_SIZE_SIZE) + message)
 
             clients.remove(client_socket)
             client_socket.close()
 
         while True:
+            time.sleep(0)
             client_socket, client_address = self.socket.accept()
             clients.append(client_socket)
             threading.Thread(
-                target=handle_client, args=(client_socket, client_address)
+                target=handle_client, args=(client_socket, client_address), daemon=True
             ).start()
 
     def start(self):
         """Start a server in a thread"""
 
-        threading.Thread(target=self.process_server).start()
+        threading.Thread(target=self.process_server, daemon=True).start()
 
     def close(self):
         self.socket.close()

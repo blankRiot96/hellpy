@@ -11,6 +11,7 @@ if t.TYPE_CHECKING:
 MENU_WIDTH = 1280
 MENU_HEIGHT = 800
 PORT = 3005
+MSG_SIZE_SIZE = 4
 
 current_state: State
 is_host = False

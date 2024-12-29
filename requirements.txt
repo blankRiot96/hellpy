@@ -1,3 +1,4 @@
 cffi==1.17.1
+colorama==0.4.6
 pycparser==2.22
 raylib==5.5.0.2
