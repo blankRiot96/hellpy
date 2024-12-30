@@ -1,6 +1,2 @@
-- Make `Server` class that starts its operations in a thread automatically
-- Make `Client` class ''
-- Exchange data across clients
-- Make squares
-- Test roomie laptop
+- Add 3D models
 
