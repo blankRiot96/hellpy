@@ -3,6 +3,8 @@ from __future__ import annotations
 import typing as t
 
 if t.TYPE_CHECKING:
+    from pyray import Camera3D
+
     from src.client import Client
     from src.enums import State
     from src.player import Player
@@ -24,3 +26,4 @@ server_ip: str | None = None
 server: Server
 client: Client
 player: Player
+camera: Camera3D

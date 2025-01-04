@@ -59,7 +59,7 @@ class Client:
         color = shared.player.color
         return Packet(
             name=shared.client_name,
-            pos=[pos.x, pos.y],
+            pos=[pos.x, pos.y, pos.z],
             color=[color.r, color.g, color.b, color.a],
         )
 
