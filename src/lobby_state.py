@@ -1,5 +1,4 @@
 from pyray import *
-from raylib import CAMERA_FREE, CAMERA_PERSPECTIVE, CAMERA_THIRD_PERSON
 
 from src import shared
 from src.client import Client
@@ -17,7 +16,7 @@ class LobbyState:
 
         shared.player = Player()
         shared.camera = Camera3D()
-        shared.camera.projection = CAMERA_PERSPECTIVE
+        shared.camera.projection = CameraProjection.CAMERA_PERSPECTIVE
         shared.camera.position = Vector3(10, 10, 10)  # Adjust based on your scene
         shared.camera.target = shared.player.pos
         shared.camera.up = Vector3(0, 1, 0)

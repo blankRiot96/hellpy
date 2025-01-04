@@ -1,5 +1,4 @@
 from pyray import *
-from raylib import DEFAULT, TEXT_SIZE
 
 from src import shared
 from src.enums import State
@@ -7,7 +6,7 @@ from src.enums import State
 
 class FinderState:
     def __init__(self):
-        gui_set_style(DEFAULT, TEXT_SIZE, 32)
+        gui_set_style(GuiControl.DEFAULT, GuiDefaultProperty.TEXT_SIZE, 32)
         self.server_code = ""
 
     def update(self):
