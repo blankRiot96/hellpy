@@ -5,7 +5,7 @@ import typing as t
 if t.TYPE_CHECKING:
     from src.client import Client
     from src.enums import State
-    from src.packets import Packet
+    from src.player import Player
     from src.server import Server
 
 MENU_WIDTH = 1920 // 2
@@ -23,3 +23,4 @@ server_ip: str | None = None
 
 server: Server
 client: Client
+player: Player

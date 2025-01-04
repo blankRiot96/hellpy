@@ -1,4 +1,4 @@
-from raylib import *
+from pyray import *
 
 from src import shared
 from src.client import Client
@@ -14,16 +14,16 @@ class LobbyState:
         shared.client = Client()
         shared.client.start()
 
-        self.player = Player()
+        shared.player = Player()
 
     def update(self):
-        self.player.update()
+        shared.player.update()
 
     def draw(self):
-        DrawFPS(10, 10)
-        DrawText(b"LOBBY", 10, 30, 32, RED)
-        DrawText(f"CLIENT: {shared.client_name}".encode(), 10, 60, 24, RED)
-        self.player.draw()
+        draw_fps(10, 10)
+        draw_text("LOBBY", 10, 30, 32, RED)
+        draw_text(f"CLIENT: {shared.client_name}", 10, 60, 24, RED)
+        shared.player.draw()
 
         for packet in shared.client.other_client_packets.values():
-            self.player.draw_from_packet(packet)
+            shared.player.draw_from_packet(packet)

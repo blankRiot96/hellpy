@@ -1,4 +1,5 @@
-from raylib import *
+from pyray import *
+from raylib import DEFAULT, TEXT_SIZE
 
 from src import shared
 from src.enums import State
@@ -6,14 +7,14 @@ from src.enums import State
 
 class FinderState:
     def __init__(self):
-        GuiSetStyle(DEFAULT, TEXT_SIZE, 32)
-        self.server_code = b""
+        gui_set_style(DEFAULT, TEXT_SIZE, 32)
+        self.server_code = ""
 
     def update(self):
         pass
 
     def draw(self):
-        GuiTextBox((10, 10, 200, 70), self.server_code, 32, True)
+        gui_text_box((10, 10, 200, 70), self.server_code, 32, True)
 
-        if GuiButton((10, 90, 200, 70), b"FIND"):
+        if gui_button((10, 90, 200, 70), "FIND"):
             shared.current_state = State.LOBBY

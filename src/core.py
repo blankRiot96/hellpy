@@ -1,7 +1,8 @@
 import argparse
 import sys
 
-from raylib import *
+from pyray import *
+from raylib import FLAG_WINDOW_RESIZABLE, LOG_ERROR
 
 from src import shared
 from src.enums import State
@@ -11,12 +12,12 @@ from src.states import StateObj
 
 class Core:
     def __init__(self):
-        SetTraceLogLevel(LOG_ERROR)
+        set_trace_log_level(LOG_ERROR)
         self.process_cli()
 
-        SetConfigFlags(FLAG_WINDOW_RESIZABLE)
-        InitWindow(shared.MENU_WIDTH, shared.MENU_HEIGHT, b"Hell")
-        SetWindowPosition(2 + int(shared.MENU_WIDTH * shared.window_open_flag), 50)
+        set_config_flags(FLAG_WINDOW_RESIZABLE)
+        init_window(shared.MENU_WIDTH, shared.MENU_HEIGHT, "Hell")
+        set_window_position(2 + int(shared.MENU_WIDTH * shared.window_open_flag), 50)
         shared.current_state = State.MENU
         self.state_obj = StateObj()
 
@@ -43,10 +44,10 @@ class Core:
         self.state_obj.update()
 
     def draw(self):
-        BeginDrawing()
-        ClearBackground(BLACK)
+        begin_drawing()
+        clear_background(BLACK)
         self.state_obj.draw()
-        EndDrawing()
+        end_drawing()
 
     def cleanup(self):
         if hasattr(shared, "server"):
@@ -55,7 +56,7 @@ class Core:
             shared.client.close()
 
     def run(self):
-        while not WindowShouldClose():
+        while not window_should_close():
             self.update()
             self.draw()
 

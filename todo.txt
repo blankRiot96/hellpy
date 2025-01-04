@@ -1,4 +1,3 @@
-- Migrate to `pyray` API
 - Render 3D cubes instead of 2D squares
 - Add camera movement for 3D cubes
 

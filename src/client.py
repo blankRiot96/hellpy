@@ -2,11 +2,9 @@ import socket
 import threading
 import time
 
-from raylib import *
-
 from src import shared
 from src.logger import log
-from src.packets import Packet, Vector2
+from src.packets import Packet
 
 
 class Client:
@@ -18,7 +16,6 @@ class Client:
     def __init__(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.other_client_packets: dict[str, Packet] = {}
-        self.packet = Packet(Vector2(0, 0), shared.client_name, (255, 255, 255, 255))
 
     def process_client(self):
         HOST, PORT = shared.server_ip, shared.PORT
@@ -51,10 +48,20 @@ class Client:
         threading.Thread(target=receive_data, daemon=True).start()
         while True:
             time.sleep(0.001)
-            message = self.packet.to_json().encode()
+            packet = self.create_packet()
+            message = packet.to_json().encode()
             size = len(message)
 
             self.socket.send(size.to_bytes(shared.MSG_SIZE_SIZE) + message)
+
+    def create_packet(self) -> Packet:
+        pos = shared.player.pos
+        color = shared.player.color
+        return Packet(
+            name=shared.client_name,
+            pos=[pos.x, pos.y],
+            color=[color.r, color.g, color.b, color.a],
+        )
 
     def start(self):
         """Starts a client in a thread"""
