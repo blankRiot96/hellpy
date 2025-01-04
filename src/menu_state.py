@@ -1,7 +1,6 @@
 import random
 
 from pyray import *
-from raylib import DEFAULT, TEXT_SIZE
 
 from src import shared
 from src.enums import State
@@ -12,7 +11,7 @@ BUTTON_HEIGHT = 100
 
 class MenuState:
     def __init__(self):
-        gui_set_style(DEFAULT, TEXT_SIZE, 32)
+        gui_set_style(GuiControl.DEFAULT, GuiDefaultProperty.TEXT_SIZE, 32)
         self.client_name = f"guest{random.randint(1, 99)}"
 
     def update(self):

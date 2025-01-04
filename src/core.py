@@ -2,7 +2,6 @@ import argparse
 import sys
 
 from pyray import *
-from raylib import FLAG_WINDOW_RESIZABLE, LOG_ERROR
 
 from src import shared
 from src.enums import State
@@ -12,10 +11,10 @@ from src.states import StateObj
 
 class Core:
     def __init__(self):
-        set_trace_log_level(LOG_ERROR)
+        set_trace_log_level(TraceLogLevel.LOG_ERROR)
         self.process_cli()
 
-        set_config_flags(FLAG_WINDOW_RESIZABLE)
+        set_config_flags(ConfigFlags.FLAG_WINDOW_RESIZABLE)
         init_window(shared.MENU_WIDTH, shared.MENU_HEIGHT, "Hell")
         set_window_position(2 + int(shared.MENU_WIDTH * shared.window_open_flag), 50)
         shared.current_state = State.MENU
