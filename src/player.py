@@ -18,8 +18,8 @@ class Player:
         self.color = Color(t(), t(), t(), 255)
 
     def update(self):
-        dx = is_key_down(KeyboardKey.KEY_D) - is_key_down(KeyboardKey.KEY_A)
-        dz = is_key_down(KeyboardKey.KEY_S) - is_key_down(KeyboardKey.KEY_W)
+        dz = is_key_down(KeyboardKey.KEY_A) - is_key_down(KeyboardKey.KEY_D)
+        dx = is_key_down(KeyboardKey.KEY_S) - is_key_down(KeyboardKey.KEY_W)
 
         self.pos.x += SPEED * dx * get_frame_time()
         self.pos.z += SPEED * dz * get_frame_time()

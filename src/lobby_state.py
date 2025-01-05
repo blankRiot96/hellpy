@@ -22,13 +22,19 @@ class LobbyState:
         shared.camera.up = Vector3(0, 1, 0)
         shared.camera.fovy = 30.0
 
+        self.cam_z = 0.0
+
     def update(self):
         shared.player.update()
 
     def draw(self):
-        # update_camera(shared.camera, CameraMode.CAMERA_FREE)
+        cam_x = (get_mouse_position().x - (shared.MENU_WIDTH / 2)) / 100
+        cam_y = (get_mouse_position().y - (shared.MENU_HEIGHT / 2)) / -100
 
+        shared.camera.position = vector3_add(shared.player.pos, (10, 7, 0))
         shared.camera.target = shared.player.pos
+
+        # update_camera(shared.camera, CameraMode.CAMERA_FREE)
 
         draw_fps(10, 10)
         draw_text("LOBBY", 10, 30, 32, RED)

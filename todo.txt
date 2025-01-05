@@ -1,2 +1,4 @@
-- Add camera movement for 3D cubes
-
+- Load model of cube instead of drawing cube
+- https://www.raylib.com/examples/models/loader.html?name=models_yaw_pitch_roll
+- Change 'yaw' of model on mouse position movement
+- Move in direction that cube is facing
