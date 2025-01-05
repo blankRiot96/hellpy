@@ -10,8 +10,8 @@ if t.TYPE_CHECKING:
     from src.player import Player
     from src.server import Server
 
-MENU_WIDTH = 1920 // 2
-MENU_HEIGHT = 1020
+MENU_WIDTH = 1280
+MENU_HEIGHT = 720
 PORT = 3005
 MSG_SIZE_SIZE = 4
 

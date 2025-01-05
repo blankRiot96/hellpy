@@ -19,10 +19,10 @@ class Player:
 
     def update(self):
         dx = is_key_down(KeyboardKey.KEY_D) - is_key_down(KeyboardKey.KEY_A)
-        dy = is_key_down(KeyboardKey.KEY_S) - is_key_down(KeyboardKey.KEY_W)
+        dz = is_key_down(KeyboardKey.KEY_S) - is_key_down(KeyboardKey.KEY_W)
 
         self.pos.x += SPEED * dx * get_frame_time()
-        self.pos.y += SPEED * dy * get_frame_time()
+        self.pos.z += SPEED * dz * get_frame_time()
 
     @staticmethod
     def draw_from_packet(packet: Packet) -> None:

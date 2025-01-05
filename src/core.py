@@ -16,7 +16,7 @@ class Core:
 
         set_config_flags(ConfigFlags.FLAG_WINDOW_RESIZABLE)
         init_window(shared.MENU_WIDTH, shared.MENU_HEIGHT, "Hell")
-        set_window_position(2 + int(shared.MENU_WIDTH * shared.window_open_flag), 50)
+        # set_window_position(2 + int(shared.MENU_WIDTH * shared.window_open_flag), 50)
         shared.current_state = State.MENU
         self.state_obj = StateObj()
 

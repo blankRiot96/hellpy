@@ -47,7 +47,7 @@ class Client:
 
         threading.Thread(target=receive_data, daemon=True).start()
         while True:
-            time.sleep(0.001)
+            time.sleep(0.0001)
             packet = self.create_packet()
             message = packet.to_json().encode()
             size = len(message)
