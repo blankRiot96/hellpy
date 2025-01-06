@@ -10,6 +10,8 @@ class Packet:
     name: str
     pos: list[float]
     color: list[int]
+    model_id: int
+    angle: float
 
     def to_json(self) -> str:
         return json.dumps(asdict(self))

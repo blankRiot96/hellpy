@@ -2,6 +2,8 @@ import socket
 import threading
 import time
 
+from pyray import play_sound
+
 from src import shared
 from src.logger import log
 from src.packets import Packet
@@ -61,6 +63,8 @@ class Client:
             name=shared.client_name,
             pos=[pos.x, pos.y, pos.z],
             color=[color.r, color.g, color.b, color.a],
+            model_id=shared.player.model_id.value,
+            angle=shared.player.angle,
         )
 
     def start(self):

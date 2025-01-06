@@ -1,3 +1,5 @@
+import math
+
 from pyray import *
 
 from src import shared
@@ -22,16 +24,29 @@ class LobbyState:
         shared.camera.up = Vector3(0, 1, 0)
         shared.camera.fovy = 30.0
 
-        self.cam_z = 0.0
+        self.prev_mouse_pos = get_mouse_position()
 
     def update(self):
         shared.player.update()
 
     def draw(self):
-        cam_x = (get_mouse_position().x - (shared.MENU_WIDTH / 2)) / 100
-        cam_y = (get_mouse_position().y - (shared.MENU_HEIGHT / 2)) / -100
+        offset = shared.MENU_WIDTH / 2
+        scale = 1 / 50
+        cam_z = (get_mouse_position().x - offset) * scale
+        cam_y = (get_mouse_position().y - (shared.MENU_HEIGHT / 2)) / 200
 
-        shared.camera.position = vector3_add(shared.player.pos, (10, 7, 0))
+        shared.player.compute_angle_from_cam_z(cam_z, offset, scale)
+
+        # Calculate camera position based on player's angle
+        distance = 10  # Distance behind the player
+        height = 2 + cam_y  # Camera height relative to the player
+        cam_dx = math.sin(shared.player.angle) * distance
+        cam_dz = math.cos(shared.player.angle) * distance
+
+        # Set the camera's position and target
+        shared.camera.position = vector3_add(
+            shared.player.pos, (-cam_dx, height, -cam_dz)
+        )
         shared.camera.target = shared.player.pos
 
         # update_camera(shared.camera, CameraMode.CAMERA_FREE)

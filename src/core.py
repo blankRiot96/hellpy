@@ -4,6 +4,7 @@ import sys
 from pyray import *
 
 from src import shared
+from src.asset_manager import AssetManager
 from src.enums import State
 from src.logger import log
 from src.states import StateObj
@@ -17,6 +18,8 @@ class Core:
         set_config_flags(ConfigFlags.FLAG_WINDOW_RESIZABLE)
         init_window(shared.MENU_WIDTH, shared.MENU_HEIGHT, "Hell")
         # set_window_position(2 + int(shared.MENU_WIDTH * shared.window_open_flag), 50)
+
+        shared.asset_manager = AssetManager()
         shared.current_state = State.MENU
         self.state_obj = StateObj()
 
@@ -28,6 +31,7 @@ class Core:
         )
         self.parser.add_argument("-w", "--window", default=0, help="Window open mode")
         self.parser.add_argument("--ip", help="Host's IP")
+        self.parser.add_argument("--model-id", help="Model ID")
 
         args = self.parser.parse_args()
         if args.debug is True:
@@ -36,6 +40,9 @@ class Core:
         shared.window_open_flag = int(args.window)
         if args.ip:
             shared.server_ip = args.ip
+
+        if args.model_id:
+            shared.model_id_argc = args.model_id
 
         log(f"{shared.server_ip = }", color="green")
 
