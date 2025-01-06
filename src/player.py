@@ -24,16 +24,17 @@ class Player:
             self.model_id = getattr(ModelID, shared.model_id_argc)
         t = lambda: get_random_value(100, 255)
         self.color = Color(t(), t(), t(), 255)
-        self.angle = 0.0
+        self.angle = math.pi / 2
+        self.prev_mouse_pos = get_mouse_position()
 
-    def compute_angle_from_cam_z(
-        self, cam_z: float, offset: float, scale: float
-    ) -> None:
-        total = math.pi / 2
-        ratio = cam_z / (offset * scale)
-        self.angle = -total * ratio
-        # Um dz or dx correction
-        self.angle += math.pi / 2
+    def compute_angle(self) -> None:
+        mouse_pos = get_mouse_position()
+        z_delta = mouse_pos.x - self.prev_mouse_pos.x
+        self.prev_mouse_pos.x, self.prev_mouse_pos.y = mouse_pos.x, mouse_pos.y
+
+        turn_scale = 0.001
+        self.angle -= z_delta * turn_scale
+        self.angle %= 2 * math.pi
 
     def update(self):
         # Get input for forward/backward (W/S) and strafing (A/D)

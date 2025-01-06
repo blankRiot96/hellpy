@@ -25,21 +25,25 @@ class LobbyState:
         shared.camera.fovy = 30.0
 
         self.prev_mouse_pos = get_mouse_position()
+        self.cam_y = 0.0
+        disable_cursor()
 
     def update(self):
         shared.player.update()
 
     def draw(self):
-        offset = shared.MENU_WIDTH / 2
-        scale = 1 / 50
-        cam_z = (get_mouse_position().x - offset) * scale
-        cam_y = (get_mouse_position().y - (shared.MENU_HEIGHT / 2)) / 200
+        mouse_pos = get_mouse_position()
+        y_delta = mouse_pos.y - self.prev_mouse_pos.y
+        self.prev_mouse_pos.x, self.prev_mouse_pos.y = mouse_pos.x, mouse_pos.y
 
-        shared.player.compute_angle_from_cam_z(cam_z, offset, scale)
+        y_rotat_scale = 0.0025
+        self.cam_y += y_delta * y_rotat_scale
+        self.cam_y = clamp(self.cam_y, -1.75, 1.75)
+        shared.player.compute_angle()
 
         # Calculate camera position based on player's angle
         distance = 10  # Distance behind the player
-        height = 2 + cam_y  # Camera height relative to the player
+        height = 2 + self.cam_y  # Camera height relative to the player
         cam_dx = math.sin(shared.player.angle) * distance
         cam_dz = math.cos(shared.player.angle) * distance
 
