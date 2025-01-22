@@ -7,6 +7,7 @@ import pyray
 class ModelID(Enum):
     CUBE_MAN = auto()
     TANKY_BOI = auto()
+    FLOOR = auto()
 
     @lru_cache
     @staticmethod
@@ -17,6 +18,7 @@ class ModelID(Enum):
 MODEL_MAP: dict[ModelID, str] = {
     ModelID.CUBE_MAN: "assets/cube.obj",
     ModelID.TANKY_BOI: "assets/tanky.obj",
+    ModelID.FLOOR: "assets/floor.obj",
 }
 
 

@@ -1,6 +1,8 @@
+import queue
 import socket
 import threading
 import time
+from queue import Empty, PriorityQueue, Queue
 
 from src import shared
 from src.logger import log
@@ -47,14 +49,27 @@ class Server:
                 if not message:
                     break
 
+                queue.put([size, message, client_socket])
+
+            clients.remove(client_socket)
+            client_socket.close()
+
+        def separate_function():
+            while True:
+                try:
+                    size, message, client_socket = queue.get(timeout=0.1)
+                except Empty:
+                    continue
+
                 for client in clients:
                     if client == client_socket:
                         continue
 
                     client.send(size.to_bytes(shared.MSG_SIZE_SIZE) + message)
 
-            clients.remove(client_socket)
-            client_socket.close()
+        queue = Queue()
+
+        threading.Thread(target=separate_function, daemon=True).start()
 
         while True:
             time.sleep(0)

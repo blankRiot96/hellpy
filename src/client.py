@@ -2,8 +2,6 @@ import socket
 import threading
 import time
 
-from pyray import play_sound
-
 from src import shared
 from src.logger import log
 from src.packets import Packet
@@ -18,6 +16,7 @@ class Client:
     def __init__(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.other_client_packets: dict[str, Packet] = {}
+        self.ready_to_send = True
 
     def process_client(self):
         HOST, PORT = shared.server_ip, shared.PORT
@@ -45,26 +44,38 @@ class Client:
 
                 packet = Packet.from_json(message.decode())
                 self.other_client_packets[packet.name] = packet
+                self.ready_to_send = True
                 # log(self.other_client_packets, color="green")
 
         threading.Thread(target=receive_data, daemon=True).start()
+        self.send_data()
         while True:
-            time.sleep(0.0001)
-            packet = self.create_packet()
-            message = packet.to_json().encode()
-            size = len(message)
+            # time.sleep(0)
+            time.sleep(0.0001)  # ~0.1ms PING minimum
 
-            self.socket.send(size.to_bytes(shared.MSG_SIZE_SIZE) + message)
+            self.send_data()
+
+    def send_data(self):
+        # if not self.ready_to_send or not hasattr(shared, "world"):
+        if not hasattr(shared, "world"):
+            return
+
+        packet = self.create_packet()
+        message = packet.to_json().encode()
+        size = len(message)
+
+        self.socket.send(size.to_bytes(shared.MSG_SIZE_SIZE) + message)
+        self.ready_to_send = False
 
     def create_packet(self) -> Packet:
-        pos = shared.player.pos
-        color = shared.player.color
+        pos = shared.world.player.pos
+        color = shared.world.player.color
         return Packet(
             name=shared.client_name,
             pos=[pos.x, pos.y, pos.z],
             color=[color.r, color.g, color.b, color.a],
-            model_id=shared.player.model_id.value,
-            angle=shared.player.angle,
+            model_id=shared.world.player.model_id.value,
+            angle=shared.world.player.angle,
         )
 
     def start(self):

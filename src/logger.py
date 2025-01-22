@@ -1,4 +1,5 @@
 import inspect
+import time
 from pathlib import Path
 
 import colorama
@@ -16,6 +17,7 @@ def log(*objects, color: str = "white") -> None:
     line_number = caller_frame.f_lineno
 
     output = color_text("[LOG]", "green")
+    output += color_text(f"[{time.time():.0f}]", "cyan")
     output += color_text(f"[{file_name}:{line_number}] ", "blue")
     output += color_text(" ".join(map(str, objects)), color)
 
